@@ -1,4 +1,5 @@
 #include <cstdint>
+#include "stub/steam/header.hpp"
 
 namespace SteamUtils {
     

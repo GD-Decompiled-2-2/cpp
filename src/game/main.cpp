@@ -1,15 +1,19 @@
-int main(void* hInstance, void* hPrevInstance, void* lpCmdLine, int nCmdShow)
+#ifdef WIN32
+#include <windows.h>
+#include "3rdparty/cocos/wrapper.hpp"
+
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
     // 1. Register window class
-    WNDCLASS wc = {};
+    WNDCLASSW wc = {};
     wc.lpfnWndProc = DefWindowProc; // placeholder, real GD hooks input elsewhere
     wc.hInstance   = (HINSTANCE)hInstance;
     wc.lpszClassName = L"GDWindowClass";
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-    RegisterClass(&wc);
+    RegisterClassW(&wc);
 
     // 2. Create the window
-    HWND hwnd = CreateWindowEx(
+    HWND hwnd = CreateWindowExW(
         0,
         wc.lpszClassName,
         L"Geometry Dash",
@@ -29,7 +33,7 @@ int main(void* hInstance, void* hPrevInstance, void* lpCmdLine, int nCmdShow)
     UpdateWindow(hwnd);
 
     // 3. Initialize game engine / Cocos stuff
-    AppDelegate app;
+    CocosWrapper::AppDelegate app;
     app.applicationDidFinishLaunching();
 
     // 4. Run main message loop
@@ -42,3 +46,4 @@ int main(void* hInstance, void* hPrevInstance, void* lpCmdLine, int nCmdShow)
 
     return (int)msg.wParam;
 }
+#endif
